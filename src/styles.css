@@ -212,36 +212,37 @@
 
 /* ---------- Motion system: fleet, reveals, marquee ---------- */
 
+/* Airliner artwork points NOSE-LEFT, so every flight lane travels right → left. */
 @keyframes fly-across {
   0% {
-    transform: translate3d(-30vw, 12vh, 0) rotate(-6deg) scale(0.9);
+    transform: translate3d(118vw, -10vh, 0) rotate(4deg) scale(1.04);
     opacity: 0;
   }
-  8% {
+  9% {
     opacity: 1;
   }
-  92% {
+  90% {
     opacity: 1;
   }
   100% {
-    transform: translate3d(120vw, -14vh, 0) rotate(-6deg) scale(1.05);
+    transform: translate3d(-38vw, 10vh, 0) rotate(4deg) scale(0.92);
     opacity: 0;
   }
 }
 
-@keyframes fly-back {
+@keyframes fly-far {
   0% {
-    transform: translate3d(120vw, 0, 0) rotate(184deg) scale(0.75);
+    transform: translate3d(115vw, 0, 0) scale(0.78);
     opacity: 0;
   }
-  10% {
-    opacity: 0.75;
+  12% {
+    opacity: 0.8;
   }
-  90% {
-    opacity: 0.75;
+  88% {
+    opacity: 0.8;
   }
   100% {
-    transform: translate3d(-35vw, 8vh, 0) rotate(184deg) scale(0.75);
+    transform: translate3d(-32vw, 6vh, 0) scale(0.78);
     opacity: 0;
   }
 }
@@ -252,6 +253,23 @@
   }
   100% {
     transform: translate3d(125vw, 0, 0);
+  }
+}
+
+@keyframes ride-right {
+  0% {
+    transform: translate3d(-25vw, 0, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(115vw, 0, 0);
+    opacity: 0;
   }
 }
 
@@ -266,16 +284,16 @@
 
 @keyframes marquee-x {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes dash-move {
   to {
-    stroke-dashoffset: -240;
+    stroke-dashoffset: 240;
   }
 }
 
@@ -291,32 +309,48 @@
 }
 
 @utility animate-fly {
-  animation: fly-across 34s linear infinite;
+  animation: fly-across 46s linear infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
-@utility animate-fly-back {
-  animation: fly-back 52s linear infinite;
+@utility animate-fly-far {
+  animation: fly-far 74s linear infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 @utility animate-roll {
-  animation: roll-right 30s linear infinite;
+  animation: roll-right 44s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@utility animate-ride {
+  animation: ride-right 26s linear infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 @utility animate-roll-back {
-  animation: roll-left 26s linear infinite;
+  animation: roll-left 38s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 @utility animate-marquee {
-  animation: marquee-x 34s linear infinite;
+  animation: marquee-x 42s linear infinite;
+  will-change: transform;
 }
 
 @utility animate-dash {
-  animation: dash-move 3s linear infinite;
+  animation: dash-move 3.6s linear infinite;
 }
 
 @utility animate-ring {
   animation: pulse-ring 2.6s ease-out infinite;
 }
+
 
 @utility reveal {
   opacity: 0;
