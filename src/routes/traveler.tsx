@@ -112,12 +112,13 @@ function TravelerPage() {
                     Upload ID
                   </Button>
                 </div>
-                <p className="mt-4 text-sm">
-                  Status:{" "}
+                <div className="mt-4 flex items-center gap-2 text-sm">
+                  <span>Status:</span>
                   <Badge variant={kyc === "VERIFIED" ? "default" : "secondary"}>
                     {hydrated ? kyc : "…"}
                   </Badge>
-                </p>
+                </div>
+
               </div>
 
               <div className="surface-glass rounded-3xl p-6">
