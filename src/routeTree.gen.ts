@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as TravelerRouteImport } from './routes/traveler'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TravelerRoute = TravelerRouteImport.update({
+  id: '/traveler',
+  path: '/traveler',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/track': typeof TrackRoute
+  '/traveler': typeof TravelerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/track': typeof TrackRoute
+  '/traveler': typeof TravelerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/track': typeof TrackRoute
+  '/traveler': typeof TravelerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/book' | '/track'
+  fullPaths: '/' | '/auth' | '/book' | '/track' | '/traveler'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/book' | '/track'
-  id: '__root__' | '/' | '/auth' | '/book' | '/track'
+  to: '/' | '/auth' | '/book' | '/track' | '/traveler'
+  id: '__root__' | '/' | '/auth' | '/book' | '/track' | '/traveler'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
   TrackRoute: typeof TrackRoute
+  TravelerRoute: typeof TravelerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/traveler': {
+      id: '/traveler'
+      path: '/traveler'
+      fullPath: '/traveler'
+      preLoaderRoute: typeof TravelerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
   TrackRoute: TrackRoute,
+  TravelerRoute: TravelerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
