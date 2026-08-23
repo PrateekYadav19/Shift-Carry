@@ -379,7 +379,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fly,
-  .animate-fly-back,
+  .animate-fly-far,
+  .animate-ride,
   .animate-roll,
   .animate-roll-back,
   .animate-marquee,

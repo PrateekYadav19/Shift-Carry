@@ -263,15 +263,23 @@ function Landing() {
             </div>
 
             <div className="relative">
-              <div className="surface-glass overflow-hidden rounded-[2rem] p-2">
-                <img
-                  src={heroImg}
-                  alt="Traveler carrying a sealed SwiftCarry parcel through an airport terminal"
-                  width={1408}
-                  height={1104}
-                  className="h-full w-full rounded-[1.6rem] object-cover"
-                />
+              <div className="surface-glass group relative overflow-hidden rounded-[2rem] p-2">
+                <div className="relative overflow-hidden rounded-[1.6rem]">
+                  <img
+                    src={heroImg}
+                    alt="Traveler carrying a sealed SwiftCarry parcel through an airport terminal at golden hour"
+                    width={1024}
+                    height={1280}
+                    fetchPriority="high"
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+                  />
+                  {/* cinematic grade so the photo sits inside the brand palette */}
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,oklch(0.16_0.028_250/0.75)_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 mix-blend-soft-light bg-[radial-gradient(80%_60%_at_70%_20%,oklch(0.79_0.17_78/0.35),transparent_70%)]" />
+                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[1.6rem]" />
+                </div>
               </div>
+
 
               <div className="surface-glass animate-float absolute -bottom-6 -left-4 w-64 rounded-2xl p-4 sm:-left-8">
                 <p className="text-xs text-muted-foreground">Matched traveler</p>
