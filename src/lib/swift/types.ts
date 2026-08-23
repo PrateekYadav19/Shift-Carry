@@ -28,7 +28,7 @@ export interface User {
   id: string;
   name: string;
   phone: string;
-  email?: string;
+  email?: string | undefined;
   role: Role;
   kycStatus: "NONE" | "PENDING" | "VERIFIED";
   createdAt: string;
@@ -56,11 +56,11 @@ export interface ShipmentEvent {
 
 export interface Payment {
   razorpayOrderId: string;
-  razorpayPaymentId?: string;
-  razorpaySignature?: string;
+  razorpayPaymentId?: string | undefined;
+  razorpaySignature?: string | undefined;
   status: "CREATED" | "CAPTURED" | "FAILED";
   amount: number;
-  verifiedAt?: string;
+  verifiedAt?: string | undefined;
 }
 
 export interface Shipment {
@@ -81,7 +81,7 @@ export interface Shipment {
   priceInPaise: number;
   otp: string;
   flagged: boolean;
-  matchedJourneyId?: string;
+  matchedJourneyId?: string | undefined;
   payment: Payment;
   events: ShipmentEvent[];
   createdAt: string;
