@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Chatbot } from "@/components/swift/chatbot";
+import { FleetLayer } from "@/components/swift/fleet-layer";
 import { Toaster } from "@/components/ui/sonner";
 
 
@@ -135,8 +136,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <FleetLayer />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="relative z-10">
+        <Outlet />
+      </div>
       <Chatbot />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
