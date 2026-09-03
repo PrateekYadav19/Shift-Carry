@@ -65,7 +65,7 @@ function AdminPage() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s) => (
-              <div key={s.label} className="surface-glass rounded-2xl p-5">
+              <div key={s.label} className="surface-glass lift sheen rounded-2xl p-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-muted-foreground">{s.label}</p>
                   <s.icon className="h-4 w-4 text-primary" />
