@@ -90,6 +90,8 @@ function AdminPage() {
                       <TableHead>Tier</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Payment</TableHead>
+                      <TableHead>Settlement</TableHead>
+                      <TableHead className="text-right">Traveller reward</TableHead>
                       <TableHead className="text-right">Amount</TableHead>
                       <TableHead />
                     </TableRow>
