@@ -15,20 +15,20 @@ const nodes = [
   { id: "JAI", label: "Jaipur", x: 30, y: 40 },
   { id: "BOM", label: "Mumbai", x: 52, y: 78 },
   { id: "HYD", label: "Hyderabad", x: 70, y: 52 },
-  { id: "BLR", label: "Bengaluru", x: 88, y: 30 },
+  { id: "BLR", label: "Bengaluru", x: 90, y: 44 },
 ];
 
 const arcs = [
   "M 12 68 C 24 22, 40 22, 52 78",
   "M 52 78 C 60 40, 64 36, 70 52",
-  "M 70 52 C 76 20, 82 20, 88 30",
+  "M 70 52 C 76 26, 84 30, 90 44",
   "M 12 68 C 34 96, 40 88, 70 52",
 ];
 
 const objects = [
   { img: plane3d, label: "Flight · Express", cls: "left-[8%] top-[6%]", delay: "0s" },
   { img: train3d, label: "Train · Standard", cls: "left-[44%] top-[2%]", delay: "1.2s" },
-  { img: bus3d, label: "Bus · Standard", cls: "right-[6%] top-[14%]", delay: "2.4s" },
+  { img: bus3d, label: "Bus · Standard", cls: "right-[2%] top-[0%]", delay: "2.4s" },
 ];
 
 const chips = [
