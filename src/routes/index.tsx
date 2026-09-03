@@ -3,6 +3,11 @@ import { SiteNav, SiteFooter } from "@/components/swift/site-nav";
 import { RouteMarquee } from "@/components/swift/fleet-layer";
 import { PoweredByRazorpay, RazorpayMark } from "@/components/swift/razorpay";
 import { PartnersStrip } from "@/components/swift/partners";
+import { HoloRoute } from "@/components/swift/holo-route";
+import plane3d from "@/assets/3d-plane.png";
+import train3d from "@/assets/3d-train.png";
+import bus3d from "@/assets/3d-bus.png";
+import parcel3d from "@/assets/3d-parcel.png";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
@@ -259,7 +264,7 @@ function Landing() {
                 <Sparkles className="mr-1.5 h-3 w-3 text-primary" /> Matched in seconds by AI
               </Badge>
               <h1 className="mt-5 text-5xl leading-[1.03] font-bold sm:text-6xl lg:text-7xl">
-                Your parcel <span className="text-gradient">flies today</span> — with someone
+                Your parcel <span className="text-gradient-live">flies today</span> — with someone
                 already going there.
               </h1>
               <p className="mt-6 max-w-xl text-lg text-muted-foreground">
@@ -348,7 +353,7 @@ function Landing() {
           <div className="mt-14 grid gap-6 md:grid-cols-2">
             {fleet.map((f, i) => (
               <Reveal key={f.mode} delay={i * 90}>
-                <article className="surface-glass group relative h-full overflow-hidden rounded-[1.75rem] p-8 transition-transform duration-500 hover:-translate-y-1.5">
+                <article className="surface-glass sheen lift group relative h-full overflow-hidden rounded-[1.75rem] p-8">
                   <span className="absolute inset-x-0 top-0 h-px overflow-hidden">
                     <span className="brand-bg animate-shimmer block h-px w-1/3" />
                   </span>
@@ -366,7 +371,18 @@ function Landing() {
                       </h3>
                       <p className="mt-3 max-w-sm text-sm text-muted-foreground">{f.copy}</p>
                     </div>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
+                    <div className="flex shrink-0 flex-col items-end gap-3">
+                      <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
+                      <img
+                        src={f.icon3d}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        width={768}
+                        height={768}
+                        className="animate-float h-14 w-14 object-contain drop-shadow-[0_10px_26px_oklch(0.05_0.02_250/0.8)]"
+                      />
+                    </div>
                   </div>
 
                   <div className="relative mt-8 h-32 overflow-hidden">
@@ -385,6 +401,8 @@ function Landing() {
             ))}
           </div>
         </section>
+
+        <HoloRoute />
 
         {/* ---------------- CHAIN OF CUSTODY ---------------- */}
         <section className="relative border-y border-border/60 bg-card/40 backdrop-blur-sm">
