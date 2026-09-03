@@ -245,10 +245,11 @@ function TravelerPage() {
                             {STATUS_LABEL[s.status]}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <Badge variant="secondary">
-                            payout {inr(Math.round(s.priceInPaise * 0.62))}
+                            reward {inr(travellerReward(s.priceInPaise))}
                           </Badge>
+                          <SettlementBadge status={settlementStatus(s)} />
                           <Button
                             size="sm"
                             variant="hero"
