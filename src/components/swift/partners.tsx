@@ -92,7 +92,7 @@ export function PartnersStrip() {
             {ecosystem.map((p) => (
               <article
                 key={p.name}
-                className="surface-glass flex flex-col rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1"
+                className="surface-glass lift sheen flex flex-col rounded-3xl p-6"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary">
                   <p.icon className="h-5 w-5 text-accent" />

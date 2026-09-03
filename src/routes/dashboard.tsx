@@ -71,7 +71,7 @@ function DashboardPage() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((c) => (
-              <div key={c.label} className="surface-glass rounded-2xl p-5">
+              <div key={c.label} className="surface-glass lift sheen rounded-2xl p-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-muted-foreground">{c.label}</p>
                   <c.icon className="h-4 w-4 text-primary" />
@@ -95,7 +95,7 @@ function DashboardPage() {
               )}
 
               {shipments.map((s) => (
-                <div key={s.id} className="surface-glass rounded-3xl p-6">
+                <div key={s.id} className="surface-glass lift sheen rounded-3xl p-6">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <p className="font-display text-lg font-semibold">
