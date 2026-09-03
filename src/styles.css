@@ -401,3 +401,172 @@
     transform: none;
   }
 }
+
+/* ================================================================
+   Cinematic neon luxury layer
+   Tokens: gold (primary action), cyan (status/tech), violet (aura)
+   ================================================================ */
+:root {
+  --gold: oklch(0.79 0.17 78);
+  --gold-glow: oklch(0.79 0.17 78 / 0.45);
+  --cyan: oklch(0.82 0.14 195);
+  --cyan-glow: oklch(0.82 0.14 195 / 0.4);
+  --violet-glow: oklch(0.6 0.16 295 / 0.35);
+  --shadow-glow-cyan: 0 24px 70px -26px var(--cyan-glow);
+  --shadow-glow-violet: 0 30px 90px -32px var(--violet-glow);
+}
+
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate3d(-4%, -2%, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.15);
+  }
+}
+
+@keyframes sheen-sweep {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(240%) skewX(-18deg);
+  }
+}
+
+@keyframes page-enter-kf {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@utility animate-page-enter {
+  animation: page-enter-kf 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-aurora {
+  animation: aurora-drift 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+@utility animate-node {
+  animation: node-pulse 3s ease-in-out infinite;
+}
+
+/* animated gradient headline */
+@utility text-gradient-live {
+  background: linear-gradient(
+    100deg,
+    oklch(0.86 0.15 82) 0%,
+    oklch(0.82 0.14 195) 35%,
+    oklch(0.72 0.15 295) 60%,
+    oklch(0.86 0.15 82) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 9s linear infinite;
+}
+
+@utility neon-edge {
+  border: 1px solid oklch(1 0 0 / 0.09);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.07),
+    var(--shadow-card);
+}
+
+@utility glow-cyan {
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+@utility glow-violet {
+  box-shadow: var(--shadow-glow-violet);
+}
+
+/* hover sheen sweep — apply to a relatively positioned card */
+@utility sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.09), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.sheen:hover::after {
+  animation: sheen-sweep 0.9s ease-out;
+}
+
+/* lift + glow on hover for premium cards */
+@utility lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.lift:hover {
+  transform: translateY(-4px);
+  border-color: oklch(0.79 0.17 78 / 0.35);
+  box-shadow: var(--shadow-glow);
+}
+
+/* accessible neon focus halo */
+@layer base {
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px oklch(0.79 0.17 78 / 0.16);
+    border-radius: var(--radius-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-enter,
+  .animate-aurora,
+  .animate-node,
+  .text-gradient-live {
+    animation: none !important;
+  }
+  .sheen:hover::after {
+    animation: none !important;
+  }
+  .lift:hover {
+    transform: none;
+  }
+}
