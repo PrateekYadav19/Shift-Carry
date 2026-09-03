@@ -120,6 +120,12 @@ function AdminPage() {
                             {s.payment.status}
                           </span>
                         </TableCell>
+                        <TableCell>
+                          <SettlementBadge status={settlementStatus(s)} />
+                        </TableCell>
+                        <TableCell className="text-right text-sm">
+                          {inr(travellerReward(s.priceInPaise))}
+                        </TableCell>
                         <TableCell className="text-right">{inr(s.priceInPaise)}</TableCell>
                         <TableCell className="text-right">
                           <Button asChild size="sm" variant="ghost">
