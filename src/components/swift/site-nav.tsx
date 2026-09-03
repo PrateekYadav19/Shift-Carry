@@ -8,6 +8,7 @@ import { useState } from "react";
 const links = [
   { to: "/book", label: "Send a parcel" },
   { to: "/track", label: "Track" },
+  { to: "/dashboard", label: "My shipments" },
   { to: "/traveler", label: "Become a traveler" },
   { to: "/admin", label: "Ops" },
 ] as const;

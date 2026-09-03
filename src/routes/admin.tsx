@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/table";
 import { addEvent, advance, inr, mutateShipment, useDB } from "@/lib/swift/store";
 import { STATUS_LABEL } from "@/lib/swift/types";
+import { settlementStatus, travellerReward } from "@/lib/swift/payments";
+import { SettlementBadge } from "@/components/swift/razorpay";
 import { toast } from "sonner";
 import { AlertTriangle, PackageCheck, ShieldCheck, TrendingUp } from "lucide-react";
 
@@ -90,6 +92,8 @@ function AdminPage() {
                       <TableHead>Tier</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Payment</TableHead>
+                      <TableHead>Settlement</TableHead>
+                      <TableHead className="text-right">Traveller reward</TableHead>
                       <TableHead className="text-right">Amount</TableHead>
                       <TableHead />
                     </TableRow>
@@ -117,6 +121,12 @@ function AdminPage() {
                           >
                             {s.payment.status}
                           </span>
+                        </TableCell>
+                        <TableCell>
+                          <SettlementBadge status={settlementStatus(s)} />
+                        </TableCell>
+                        <TableCell className="text-right text-sm">
+                          {inr(travellerReward(s.priceInPaise))}
                         </TableCell>
                         <TableCell className="text-right">{inr(s.priceInPaise)}</TableCell>
                         <TableCell className="text-right">

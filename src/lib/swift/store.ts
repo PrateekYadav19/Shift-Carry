@@ -105,9 +105,12 @@ function seedShipment(): Shipment {
     otp: "4417",
     flagged: false,
     matchedJourneyId: "JRN-A1",
+    travelerName: "Priya Nair",
+    deliveryOption: "FASTEST",
+    etaHours: 17,
     payment: {
-      razorpayOrderId: "order_demo9f2k4",
-      razorpayPaymentId: "pay_demo9f2k4",
+      razorpayOrderId: "order_demo_10482",
+      razorpayPaymentId: "rzp_demo_10482",
       status: "CAPTURED",
       amount: 68900,
       verifiedAt: now(),
@@ -255,7 +258,17 @@ export interface DraftShipment {
   tier: Tier;
 }
 
-export function createShipment(draft: DraftShipment, priceInPaise: number): Shipment {
+export interface ShipmentMeta {
+  orderId?: string | undefined;
+  deliveryOption?: Shipment["deliveryOption"];
+  etaHours?: number | undefined;
+}
+
+export function createShipment(
+  draft: DraftShipment,
+  priceInPaise: number,
+  meta: ShipmentMeta = {},
+): Shipment {
   const db = read();
   const id = rid("SWC");
   const match = matchJourneys(
@@ -275,8 +288,11 @@ export function createShipment(draft: DraftShipment, priceInPaise: number): Ship
     otp: String(Math.floor(1000 + Math.random() * 9000)),
     flagged: false,
     matchedJourneyId: match?.id,
+    travelerName: match?.travelerName,
+    deliveryOption: meta.deliveryOption,
+    etaHours: meta.etaHours,
     payment: {
-      razorpayOrderId: `order_${Math.random().toString(36).slice(2, 16)}`,
+      razorpayOrderId: meta.orderId ?? `order_demo_${Math.random().toString(36).slice(2, 10)}`,
       status: "CREATED",
       amount: priceInPaise,
     },

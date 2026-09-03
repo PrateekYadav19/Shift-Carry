@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addEvent, addJourney, inr, mutateShipment, setKyc, useDB } from "@/lib/swift/store";
 import type { TransportMode } from "@/lib/swift/types";
 import { STATUS_LABEL } from "@/lib/swift/types";
+import { settlementStatus, travellerReward } from "@/lib/swift/payments";
+import { DemoTag, SettlementBadge } from "@/components/swift/razorpay";
 import { toast } from "sonner";
 import { Bus, Car, IdCard, Plane, Train, Upload, Wallet } from "lucide-react";
 
@@ -227,6 +229,9 @@ function TravelerPage() {
                 <h2 className="flex items-center gap-2 font-display text-lg font-semibold">
                   <Wallet className="h-5 w-5 text-primary" /> Requests on your routes
                 </h2>
+                <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  Reward amounts are illustrative and shown before settlement. <DemoTag />
+                </p>
                 {requests.length === 0 ? (
                   <p className="mt-3 text-sm text-muted-foreground">
                     Nothing matched yet. Publish a journey and we'll notify you instantly.
@@ -245,10 +250,11 @@ function TravelerPage() {
                             {STATUS_LABEL[s.status]}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <Badge variant="secondary">
-                            payout {inr(Math.round(s.priceInPaise * 0.62))}
+                            reward {inr(travellerReward(s.priceInPaise))}
                           </Badge>
+                          <SettlementBadge status={settlementStatus(s)} />
                           <Button
                             size="sm"
                             variant="hero"

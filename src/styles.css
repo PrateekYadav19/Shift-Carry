@@ -32,6 +32,8 @@
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-razorpay: var(--razorpay);
+  --color-razorpay-ink: var(--razorpay-ink);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -83,6 +85,10 @@
   --success-foreground: oklch(0.18 0.04 160);
   --warning: oklch(0.82 0.15 85);
   --warning-foreground: oklch(0.2 0.04 80);
+
+  /* Razorpay brand blue, used only for the payment partner mark */
+  --razorpay: oklch(0.62 0.16 254);
+  --razorpay-ink: oklch(0.3 0.09 258);
 
   --border: oklch(0.31 0.03 252);
   --input: oklch(0.31 0.03 252);

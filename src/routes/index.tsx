@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/swift/site-nav";
 import { RouteMarquee } from "@/components/swift/fleet-layer";
+import { PoweredByRazorpay, RazorpayMark } from "@/components/swift/razorpay";
+import { PartnersStrip } from "@/components/swift/partners";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
@@ -17,6 +19,7 @@ import {
   Boxes,
   Bus,
   Clock,
+  CreditCard,
   Handshake,
   Lock,
   Plane,
@@ -114,24 +117,44 @@ function SectionHead({
 
 const steps = [
   {
+    icon: Boxes,
+    title: "Enter shipment details",
+    text: "Pickup and drop city, parcel category, approximate weight and when it has to land.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI finds travellers & routes",
+    text: "We scan people already travelling that corridor and score them on capacity, timing and reliability.",
+  },
+  {
     icon: QrCode,
-    title: "Drop & seal",
-    text: "Leave your parcel at a verification point. We scan, photograph and apply a tamper-evident seal with a unique ID.",
+    title: "Verify sender & parcel",
+    text: "Sender KYC, parcel declaration, weighing, photo evidence and a tamper-evident seal with a unique ID.",
+  },
+  {
+    icon: Radar,
+    title: "Select the best option",
+    text: "Fastest, Balanced or Cheapest — with the AI's recommendation against your deadline and budget.",
+  },
+  {
+    icon: CreditCard,
+    title: "Pay securely with Razorpay",
+    text: "Digital checkout designed for the Razorpay API. The order is created server-side and the signature verified before anything moves.",
   },
   {
     icon: Handshake,
-    title: "Partner pickup",
-    text: "A local partner collects the sealed parcel and hands it to your matched traveler with an OTP-confirmed handoff.",
+    title: "Traveller receives the parcel",
+    text: "A local partner hands the already-sealed parcel to your matched traveller with a QR/OTP handoff.",
   },
   {
     icon: Plane,
-    title: "It rides along",
-    text: "A KYC-verified traveler already on that exact route carries it in their spare capacity — flight, train or bus.",
+    title: "Track every handoff",
+    text: "Chain-of-custody records at each step: sender, pickup partner, verification, traveller, destination partner, receiver.",
   },
   {
     icon: ShieldCheck,
-    title: "OTP handover",
-    text: "A partner at the destination delivers to the door. The recipient confirms with a one-time code, closing the chain.",
+    title: "Delivery completed",
+    text: "The receiver confirms with a one-time code, and the traveller reward moves to Processing then Completed.",
   },
 ];
 
@@ -308,6 +331,8 @@ function Landing() {
 
         <RouteMarquee />
 
+        <PartnersStrip />
+
         {/* ---------------- FLEET ---------------- */}
         <section className="mx-auto w-full max-w-7xl px-5 py-24">
           <SectionHead
@@ -365,9 +390,9 @@ function Landing() {
         <section className="relative border-y border-border/60 bg-card/40 backdrop-blur-sm">
           <div className="mx-auto w-full max-w-7xl px-5 py-24">
             <SectionHead
-              eyebrow="Chain of custody"
-              title="Nobody touches your parcel without a scan."
-              sub="Seven states, every one of them timestamped, photographed and visible on your tracking page in real time."
+              eyebrow="How it works"
+              title="Eight steps from your desk to their door."
+              sub="Sender → verified parcel → AI match → traveller → destination → receiver. Every step timestamped, photographed and visible on your tracking page, with Razorpay sitting at the payment stage."
             />
 
             <div className="relative mt-14">
@@ -483,6 +508,81 @@ function Landing() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ---------------- PAYMENTS ---------------- */}
+        <section className="mx-auto w-full max-w-7xl px-5 py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
+            <div>
+              <SectionHead
+                eyebrow="Secure, digital payments"
+                title={
+                  <>
+                    One payment. <span className="text-gradient">Everyone who moves it</span> gets
+                    their share.
+                  </>
+                }
+                sub="Payments are designed to be handled through Razorpay APIs, giving customers a trusted digital payment experience while the platform coordinates shipment-related payments between the pickup partner, the traveller and the destination rider."
+              />
+              <Reveal delay={120}>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <PoweredByRazorpay size="lg" />
+                  <span className="text-xs text-muted-foreground">
+                    Prototype runs in demo/test mode
+                  </span>
+                </div>
+                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["Order created server-side", "Amounts are never decided by the browser."],
+                    ["Signature verified", "HMAC SHA256 check before a parcel is sealed."],
+                    ["Webhook as source of truth", "payment.captured / payment.failed."],
+                    ["Transparent breakdown", "You see exactly who is being paid, and how much."],
+                  ].map(([t, d]) => (
+                    <li key={t} className="surface-glass rounded-2xl p-5">
+                      <p className="flex items-center gap-2 font-display text-sm font-semibold">
+                        <ShieldCheck className="h-4 w-4 text-accent" /> {t}
+                      </p>
+                      <p className="mt-1.5 text-sm text-muted-foreground">{d}</p>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+
+            <Reveal delay={180}>
+              <div className="surface-glass rounded-[1.75rem] p-7">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs tracking-[0.18em] text-muted-foreground uppercase">
+                    Payment flow
+                  </p>
+                  <RazorpayMark className="h-6 w-6" />
+                </div>
+                <ol className="mt-5 space-y-3">
+                  {[
+                    "Customer creates shipment",
+                    "AI finds the best traveller option",
+                    "Customer sees the final price",
+                    "Customer pays through Razorpay",
+                    "Payment confirmation",
+                    "Traveller & partners' rewards are coordinated",
+                    "Shipment is completed",
+                    "Payment / reward status is updated",
+                  ].map((t, i) => (
+                    <li key={t} className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[11px] text-primary">
+                        {i + 1}
+                      </span>
+                      <span className="text-sm text-foreground/90">{t}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-6 border-t border-border/70 pt-4 text-xs text-muted-foreground">
+                  Designed for Razorpay integration. Demo amounts and IDs are illustrative until
+                  test-mode credentials are configured.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </section>
 

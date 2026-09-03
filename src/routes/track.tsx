@@ -8,6 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { advance, inr, mutateShipment, useDB } from "@/lib/swift/store";
 import { STATUS_LABEL } from "@/lib/swift/types";
+import { settlementStatus } from "@/lib/swift/payments";
+import {
+  PaymentLifecycleRail,
+  PaymentStatusCard,
+  PayoutBreakdown,
+  SettlementBadge,
+} from "@/components/swift/razorpay";
 import { toast } from "sonner";
 import { Flag, MapPin, Search, ShieldCheck, Truck } from "lucide-react";
 
@@ -156,33 +163,14 @@ function TrackPage() {
                     ))}
                   </dl>
                 </div>
-                <div className="surface-glass rounded-3xl p-6 text-sm">
-                  <h3 className="flex items-center gap-2 font-display text-base font-semibold">
-                    <ShieldCheck className="h-4 w-4 text-accent" /> Payment
-                  </h3>
-                  <dl className="mt-3 space-y-2">
-                    <div className="flex justify-between">
-                      <dt className="text-muted-foreground">Status</dt>
-                      <dd
-                        className={
-                          shipment.payment.status === "CAPTURED" ? "text-success" : "text-warning"
-                        }
-                      >
-                        {shipment.payment.status}
-                      </dd>
-                    </div>
-                    <div className="flex justify-between">
-                      <dt className="text-muted-foreground">Amount</dt>
-                      <dd>{inr(shipment.payment.amount)}</dd>
-                    </div>
-                    <div className="flex justify-between gap-3">
-                      <dt className="text-muted-foreground">Order</dt>
-                      <dd className="truncate font-mono text-xs">
-                        {shipment.payment.razorpayOrderId}
-                      </dd>
-                    </div>
-                  </dl>
+                <PaymentStatusCard shipment={shipment} />
+                <div className="surface-glass flex items-center justify-between rounded-3xl p-6 text-sm">
+                  <span className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-accent" /> Settlement
+                  </span>
+                  <SettlementBadge status={settlementStatus(shipment)} />
                 </div>
+                <PayoutBreakdown totalPaise={shipment.priceInPaise} />
                 <div className="surface-glass rounded-3xl p-6 text-sm">
                   <h3 className="flex items-center gap-2 font-display text-base font-semibold">
                     <MapPin className="h-4 w-4 text-primary" /> Route
@@ -191,6 +179,9 @@ function TrackPage() {
                   <p className="mt-2 text-muted-foreground">{shipment.dropAddress}</p>
                 </div>
               </aside>
+              <div className="lg:col-span-2">
+                <PaymentLifecycleRail shipment={shipment} />
+              </div>
             </div>
           )}
         </div>
