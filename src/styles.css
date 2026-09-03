@@ -86,6 +86,10 @@
   --warning: oklch(0.82 0.15 85);
   --warning-foreground: oklch(0.2 0.04 80);
 
+  /* Razorpay brand blue, used only for the payment partner mark */
+  --razorpay: oklch(0.62 0.16 254);
+  --razorpay-ink: oklch(0.3 0.09 258);
+
   --border: oklch(0.31 0.03 252);
   --input: oklch(0.31 0.03 252);
   --ring: oklch(0.79 0.17 78);
