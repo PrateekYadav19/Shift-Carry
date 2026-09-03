@@ -386,9 +386,9 @@ function Landing() {
         <section className="relative border-y border-border/60 bg-card/40 backdrop-blur-sm">
           <div className="mx-auto w-full max-w-7xl px-5 py-24">
             <SectionHead
-              eyebrow="Chain of custody"
-              title="Nobody touches your parcel without a scan."
-              sub="Seven states, every one of them timestamped, photographed and visible on your tracking page in real time."
+              eyebrow="How it works"
+              title="Eight steps from your desk to their door."
+              sub="Sender → verified parcel → AI match → traveller → destination → receiver. Every step timestamped, photographed and visible on your tracking page, with Razorpay sitting at the payment stage."
             />
 
             <div className="relative mt-14">
