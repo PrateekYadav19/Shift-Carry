@@ -179,6 +179,9 @@ function TrackPage() {
                   <p className="mt-2 text-muted-foreground">{shipment.dropAddress}</p>
                 </div>
               </aside>
+              <div className="lg:col-span-2">
+                <PaymentLifecycleRail shipment={shipment} />
+              </div>
             </div>
           )}
         </div>
