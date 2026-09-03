@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as TravelerRouteImport } from './routes/traveler'
 
@@ -36,6 +37,11 @@ const BookRoute = BookRouteImport.update({
   path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackRoute = TrackRouteImport.update({
   id: '/track',
   path: '/track',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/dashboard': typeof DashboardRoute
   '/track': typeof TrackRoute
   '/traveler': typeof TravelerRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/dashboard': typeof DashboardRoute
   '/track': typeof TrackRoute
   '/traveler': typeof TravelerRoute
 }
@@ -69,15 +77,25 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/book': typeof BookRoute
+  '/dashboard': typeof DashboardRoute
   '/track': typeof TrackRoute
   '/traveler': typeof TravelerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/book' | '/track' | '/traveler'
+  fullPaths:
+    '/' | '/admin' | '/auth' | '/book' | '/dashboard' | '/track' | '/traveler'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth' | '/book' | '/track' | '/traveler'
-  id: '__root__' | '/' | '/admin' | '/auth' | '/book' | '/track' | '/traveler'
+  to: '/' | '/admin' | '/auth' | '/book' | '/dashboard' | '/track' | '/traveler'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/book'
+    | '/dashboard'
+    | '/track'
+    | '/traveler'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -85,6 +103,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
+  DashboardRoute: typeof DashboardRoute
   TrackRoute: typeof TrackRoute
   TravelerRoute: typeof TravelerRoute
 }
@@ -119,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track': {
       id: '/track'
       path: '/track'
@@ -141,6 +167,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   BookRoute: BookRoute,
+  DashboardRoute: DashboardRoute,
   TrackRoute: TrackRoute,
   TravelerRoute: TravelerRoute,
 }
