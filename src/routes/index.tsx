@@ -417,6 +417,50 @@ function Landing() {
               </div>
             </div>
 
+            {/* custody chain rail */}
+            <Reveal delay={160}>
+              <div className="surface-glass mt-10 rounded-3xl p-7">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className="font-display text-sm tracking-[0.22em] text-muted-foreground uppercase">
+                    Chain of custody
+                  </p>
+                  <Badge variant="secondary" className="text-[10px]">
+                    Sealed &amp; scanned at every link
+                  </Badge>
+                </div>
+                <ol className="mt-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+                  {[
+                    [Boxes, "Sender", "Declares & packs"],
+                    [QrCode, "Verified parcel", "Scanned, sealed, photographed"],
+                    [Sparkles, "AI match", "Route, capacity, reliability"],
+                    [Plane, "Traveller", "Carries on their trip"],
+                    [Truck, "Destination partner", "Receives at the drop city"],
+                    [ShieldCheck, "Receiver", "OTP handover closes the chain"],
+                  ].map(([Icon, label, sub], i) => {
+                    const I = Icon as typeof ShieldCheck;
+                    return (
+                      <li
+                        key={label as string}
+                        className="group relative rounded-2xl border border-border/60 bg-background/40 p-4 transition-colors duration-500 hover:border-primary/50"
+                      >
+                        <div className="flex items-center gap-2">
+                          <I className="h-4 w-4 text-accent" />
+                          <span className="font-display text-[11px] tracking-widest text-muted-foreground/60 uppercase">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        <p className="mt-2 font-display text-sm font-semibold">{label as string}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">{sub as string}</p>
+                        {i < 5 && (
+                          <ArrowRight className="absolute top-1/2 -right-3 hidden h-4 w-4 -translate-y-1/2 text-border lg:block" />
+                        )}
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            </Reveal>
+
             <Reveal delay={200}>
               <div className="surface-glass mt-10 flex flex-wrap items-center justify-between gap-6 rounded-3xl p-7">
                 <div className="flex items-center gap-4">
