@@ -114,24 +114,44 @@ function SectionHead({
 
 const steps = [
   {
+    icon: Boxes,
+    title: "Enter shipment details",
+    text: "Pickup and drop city, parcel category, approximate weight and when it has to land.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI finds travellers & routes",
+    text: "We scan people already travelling that corridor and score them on capacity, timing and reliability.",
+  },
+  {
     icon: QrCode,
-    title: "Drop & seal",
-    text: "Leave your parcel at a verification point. We scan, photograph and apply a tamper-evident seal with a unique ID.",
+    title: "Verify sender & parcel",
+    text: "Sender KYC, parcel declaration, weighing, photo evidence and a tamper-evident seal with a unique ID.",
+  },
+  {
+    icon: Radar,
+    title: "Select the best option",
+    text: "Fastest, Balanced or Cheapest — with the AI's recommendation against your deadline and budget.",
+  },
+  {
+    icon: CreditCard,
+    title: "Pay securely with Razorpay",
+    text: "Digital checkout designed for the Razorpay API. The order is created server-side and the signature verified before anything moves.",
   },
   {
     icon: Handshake,
-    title: "Partner pickup",
-    text: "A local partner collects the sealed parcel and hands it to your matched traveler with an OTP-confirmed handoff.",
+    title: "Traveller receives the parcel",
+    text: "A local partner hands the already-sealed parcel to your matched traveller with a QR/OTP handoff.",
   },
   {
     icon: Plane,
-    title: "It rides along",
-    text: "A KYC-verified traveler already on that exact route carries it in their spare capacity — flight, train or bus.",
+    title: "Track every handoff",
+    text: "Chain-of-custody records at each step: sender, pickup partner, verification, traveller, destination partner, receiver.",
   },
   {
     icon: ShieldCheck,
-    title: "OTP handover",
-    text: "A partner at the destination delivers to the door. The recipient confirms with a one-time code, closing the chain.",
+    title: "Delivery completed",
+    text: "The receiver confirms with a one-time code, and the traveller reward moves to Processing then Completed.",
   },
 ];
 
