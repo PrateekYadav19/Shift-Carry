@@ -330,6 +330,8 @@ function Landing() {
 
         <RouteMarquee />
 
+        <PartnersStrip />
+
         {/* ---------------- FLEET ---------------- */}
         <section className="mx-auto w-full max-w-7xl px-5 py-24">
           <SectionHead
