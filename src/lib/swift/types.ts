@@ -82,6 +82,12 @@ export interface Shipment {
   otp: string;
   flagged: boolean;
   matchedJourneyId?: string | undefined;
+  /** Which of the Fastest / Balanced / Cheapest options the sender picked. */
+  deliveryOption?: "FASTEST" | "BALANCED" | "CHEAPEST" | undefined;
+  /** Promised delivery window in hours, from booking. */
+  etaHours?: number | undefined;
+  /** Name of the assigned traveller, once accepted. */
+  travelerName?: string | undefined;
   payment: Payment;
   events: ShipmentEvent[];
   createdAt: string;
