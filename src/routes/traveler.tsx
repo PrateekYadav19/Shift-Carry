@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { addEvent, addJourney, inr, mutateShipment, setKyc, useDB } from "@/lib/swift/store";
 import type { TransportMode } from "@/lib/swift/types";
 import { STATUS_LABEL } from "@/lib/swift/types";
+import { settlementStatus, travellerReward } from "@/lib/swift/payments";
+import { DemoTag, SettlementBadge } from "@/components/swift/razorpay";
 import { toast } from "sonner";
 import { Bus, Car, IdCard, Plane, Train, Upload, Wallet } from "lucide-react";
 
