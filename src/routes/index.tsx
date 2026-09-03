@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/swift/site-nav";
 import { RouteMarquee } from "@/components/swift/fleet-layer";
 import { PoweredByRazorpay, RazorpayMark } from "@/components/swift/razorpay";
+import { PartnersStrip } from "@/components/swift/partners";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
