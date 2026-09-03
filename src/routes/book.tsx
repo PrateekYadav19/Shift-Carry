@@ -477,14 +477,14 @@ function BookPage() {
                             )}
                           </span>
                           <div>
-                            <p className="flex items-center gap-2 font-display text-lg font-semibold uppercase">
+                            <div className="flex items-center gap-2 font-display text-lg font-semibold uppercase">
                               {o.label}
                               {isPick && (
                                 <Badge variant="secondary" className="text-[10px]">
                                   AI pick
                                 </Badge>
                               )}
-                            </p>
+                            </div>
                             <p className="text-sm text-muted-foreground">
                               {o.mode} · {o.etaHours} hours · {o.reliability}% on-time
                             </p>
