@@ -17,6 +17,7 @@ import {
   Boxes,
   Bus,
   Clock,
+  CreditCard,
   Handshake,
   Lock,
   Plane,
