@@ -18,7 +18,7 @@ export const Route = createFileRoute("/api/public/razorpay-webhook")({
         const signature = request.headers.get("x-razorpay-signature");
 
         const { verifyWebhook } = await import("@/lib/swift/razorpay.server");
-        const ok = verifyWebhook(raw, signature);
+        const ok = verifyWebhook(raw, signature ?? "");
         if (!ok) {
           return new Response(JSON.stringify({ error: "invalid signature" }), {
             status: 401,
