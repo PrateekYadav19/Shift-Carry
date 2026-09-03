@@ -229,6 +229,9 @@ function TravelerPage() {
                 <h2 className="flex items-center gap-2 font-display text-lg font-semibold">
                   <Wallet className="h-5 w-5 text-primary" /> Requests on your routes
                 </h2>
+                <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                  Reward amounts are illustrative and shown before settlement. <DemoTag />
+                </p>
                 {requests.length === 0 ? (
                   <p className="mt-3 text-sm text-muted-foreground">
                     Nothing matched yet. Publish a journey and we'll notify you instantly.
