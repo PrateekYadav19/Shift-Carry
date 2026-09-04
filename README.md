@@ -1,25 +1,270 @@
-# Parcel Pal
+CrowdShip — AI-Powered Crowd Delivery
 
-You are building a full-stack web platform (working name: "SwiftCarry") — a crowd-sourced parcel delivery marketplace that matches people already travelling between two cities wit h senders who want a parcel delivered along that route, using local pickup/drop-off partn ers at both ends. TECH STACK (use exactly this):- Language: TypeScript everywhere- Frontend: Next.js 14 (App Router) + Tailwind CSS + shadcn/ui- Backend: Node.js via Next.js API routes (or a separate NestJS service for cleaner separ ation) — REST APIs- Database: PostgreSQL via Prisma ORM- Cache/Queue: Redis, for real-time traveler-shipment matching and sessions- Auth: JWT-based auth with phone/email OTP login; hash any passwords with Argon2- Payments: Razorpay Node SDK, test-mode keys, Orders API + webhook verification- AI Chatbot: OpenAI or Gemini API with function calling- Hosting target: Vercel (app) + Supabase/Neon (Postgres) + Upstash (Redis) CORE USER ROLES: 1. Sender — books a shipment 2. Traveler — has spare capacity on a journey they're already taking (flight/train/bus/ca r) and gets paid to carry a sealed parcel 3. Local Partner — picks up the sealed parcel from a verification point and hands it to t he Traveler, and picks it up again at the destination to deliver to the Recipient (simula te this role for the hackathon demo) 4. Recipient — receives the parcel and confirms via OTP 5. Admin/Ops — views all shipments, disputes, and the verification queue DELIVERY TIERS:- Express: matched to travelers on flights, delivered within 24 hours, premium price- Standard: matched to travelers on trains/buses, delivered within 1–3 days, cheaper than traditional courier companies (which take 5–6 days)- An AI chatbot asks the sender whether speed or cost matters more, their deadline, and b udget, then recommends Express or Standard and pre-fills the booking form 12 Crowd-Delivery Platform — Process & Problem-Solution Map REQUIRED SCREENS: 1. Landing page explaining the value proposition, with a CTA to book 2. Sign up / login via OTP 3. New Shipment flow: (a) pickup + drop address, parcel category, approx weight/dimension s; (b) AI chatbot asks preference and recommends a tier; (c) price quote review; (d) Razo rpay checkout (test mode); (e) confirmation screen with shipment ID and tracking link 4. Shipment tracking page with a status timeline: Booked → Verified & Sealed → Picked up by local partner → Handed to traveler → In transit → Arrived at destination → Delivered 5. Traveler onboarding: KYC upload (simulated), add a journey (origin, destination, date, transport mode, available capacity in kg) 6. Traveler dashboard: matched shipment requests for their journey, accept/decline, view payout 7. Admin dashboard: all shipments, flagged disputes, verification queue, Razorpay payment status per shipment 8. AI chatbot widget available on every page for FAQs, tracking lookups, and the booking preference flow DATABASE SCHEMA (Prisma models, simplified for a hackathon):- User(id, name, email, phone, role: SENDER | TRAVELER | ADMIN, kycStatus, createdAt)- Journey(id, travelerId, origin, destination, transportMode, departureAt, availableCapac ityKg)- Shipment(id, senderId, recipientName, recipientPhone, pickupAddress, dropAddress, categ ory, weightKg, tier: EXPRESS | STANDARD, status, sealId, priceInPaise, razorpayOrderId, r azorpayPaymentId, matchedJourneyId, createdAt)- ShipmentEvent(id, shipmentId, type, note, photoUrl, createdAt) — powers the chain-of-cu stody timeline- Payment(id, shipmentId, razorpayOrderId, razorpayPaymentId, razorpaySignature, status, amount, verifiedAt) RAZORPAY INTEGRATION REQUIREMENTS:- Use test-mode keys from env vars RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET- Create a Razorpay Order when the sender confirms a quote- Open Razorpay Checkout on the frontend with that order_id- Verify the payment signature server-side (HMAC SHA256 with key_secret) before marking a shipment as paid — never trust the client callback alone- Handle a webhook endpoint for payment.captured / payment.failed as the source of truth- Show live payment status on the shipment tracking timeline AI CHATBOT REQUIREMENTS:- Use an LLM function-calling flow with two callable functions: setDeliveryPreference({ p riority: "speed" | "cost", deadline, budget }) and getShipmentStatus({ shipmentId })- The chatbot should be the primary way a non-technical user completes booking; minimize raw multi-field forms and let the chatbot fill fields conversationally- Keep tone simple, short, and reassuring SECURITY & DATA PROTECTION REQUIREMENTS:- HTTPS/TLS everywhere- Argon2 for any stored passwords, or OTP-only auth to skip passwords entirely- Encrypt PII (addresses, KYC numbers) at rest with AES-256, or rely on the managed Postg res provider's at-rest encryption for the hackathon- Verify every Razorpay webhook signature before trusting its payload- Rate-limit auth and OTP endpoints.
-i want the best UI ever in my website so, user got a Unbeleivable experinace from the website, now build it, i give you full excess to use everything which you want to use in it, make it
+Send it with someone already going there.
 
-This project was built with [Lovable](https://lovable.dev).
+CrowdShip is a concept for a crowdsourced delivery platform that connects people who need to send parcels with verified travellers who are already travelling toward the destination.
 
-## Build with Lovable
+Instead of creating a completely new transportation network, CrowdShip uses existing travel capacity to make urgent and affordable intercity delivery possible.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/33eb4c6c-84b3-4bf4-b866-f7f3c55e5f56).
+🚀 The Problem
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+Traditional courier services can be:
 
-## Development
+Expensive for urgent deliveries
+Slow for long-distance shipments
+Limited to their own transportation networks
+Difficult to optimize across different available transport options
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+At the same time, millions of people travel between cities every day with unused carrying capacity.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+CrowdShip connects these two sides.
+
+💡 Our Solution
+
+A sender creates a shipment with:
+
+Pickup location
+Destination
+Parcel weight & dimensions
+Declared contents
+Parcel value
+Required delivery time
+Preferred priority
+
+CrowdShip then finds suitable transportation/traveller options.
+
+Example
+
+Greater Noida → Bengaluru
+
+A verified traveller is already travelling from Delhi NCR to Bengaluru.
+
+Instead of sending an empty capacity, the traveller can carry an eligible parcel and earn money.
+
+Delivery Options
+
+🚀 FASTEST
+Prioritize speed.
+
+⚖️ BALANCED
+Balance price and delivery time.
+
+💰 CHEAPEST
+Prefer lower-cost available travel capacity.
+
+🧠 AI-Powered Matching
+
+The platform can evaluate:
+
+Traveller route
+Departure time
+Destination
+Parcel weight
+Available capacity
+Delivery deadline
+Price
+Reliability
+Eligible transport mode
+
+The goal is to find the best possible match, not simply the cheapest courier.
+
+🔐 Safety & Verification
+
+Trust and safety are core parts of the platform.
+
+Before a parcel is handed to a traveller, the system is designed to support:
+
+Sender identity verification
+Parcel declaration
+Weight and dimension verification
+Parcel inspection according to applicable procedures
+Parcel photos/evidence
+Tamper-evident sealing
+Unique shipment ID
+
+At every handoff:
+
+QR/OTP verification
+Timestamp
+Location
+Parcel condition
+Handoff confirmation
+
+This creates a digital chain of custody.
+
+All shipments remain subject to applicable laws, transport rules, security requirements, and carrier policies.
+
+🛡️ Traveller Protection
+
+Travellers can earn additional money from journeys they are already making.
+
+The platform is designed to provide:
+
+Verified shipments
+Verified sender information
+Clear pickup/drop instructions
+Digital handoff records
+Shipment protection where applicable
+Support during the journey
+📦 Sender Protection
+
+Senders get:
+
+Multiple delivery options
+Traveller verification
+Shipment tracking
+Handoff records
+Optional insurance/protection
+Digital payment
+Delivery status updates
+🔄 Backup Routing
+
+A traveller may cancel, miss a journey, or become unavailable.
+
+CrowdShip is designed to automatically look for another eligible option.
+
+Example:
+
+Traveller A unavailable
+        ↓
+AI searches available capacity
+        ↓
+Traveller B found
+        ↓
+Shipment reassigned
+
+When crowd capacity is unavailable, an eligible logistics/transport partner can be considered as a fallback where available.
+
+💳 Razorpay Integration
+
+CrowdShip is designed to use Razorpay APIs for digital payments.
+
+Payment flow:
+
+Customer
+   ↓
+Create Shipment
+   ↓
+Select Delivery Option
+   ↓
+Pay with Razorpay
+   ↓
+Shipment Confirmed
+   ↓
+Traveller / Partner Assigned
+   ↓
+Delivery Completed
+
+The platform can also coordinate shipment-related payments and traveller rewards.
+
+Razorpay integration in this project is intended as a prototype/demo unless production credentials and official approval are available.
+
+🔗 Complete Shipment Flow
+SENDER
+   ↓
+Parcel Created
+   ↓
+Sender Verification
+   ↓
+Parcel Verification
+   ↓
+AI Traveller Matching
+   ↓
+Razorpay Payment
+   ↓
+Pickup
+   ↓
+Traveller / Transport
+   ↓
+Handoff Verification
+   ↓
+Destination
+   ↓
+Final Delivery
+   ↓
+RECEIVER
+🎯 Example Use Case
+Shipment
+
+From: Greater Noida
+To: Bengaluru
+Weight: 1 KG
+Deadline: Under 24 Hours
+
+The platform may display:
+
+Option	Estimated Time	Example Price
+🚀 Fastest	17 hours	₹2,400
+⚖️ Balanced	21 hours	₹1,600
+💰 Cheapest	28 hours	₹700
+
+Prices and times above are illustrative demo values.
+
+The customer selects the option that best matches their needs.
+
+🌍 Vision
+
+Our long-term vision is to build a global crowd-powered delivery network where existing travel movement can be used to transport eligible parcels more efficiently.
+
+We aim to connect:
+
+People travelling
+
+People sending parcels
+
+=
+
+Smart, flexible delivery
+
+The initial focus is India, especially major metropolitan routes, before exploring international expansion.
+
+🏗️ Current Project Status
+
+This project is currently a prototype/concept implementation.
+
+The prototype focuses on demonstrating:
+
+AI-powered traveller matching
+Delivery route selection
+Shipment verification
+Chain-of-custody tracking
+Traveller rewards
+Razorpay payment integration
+Backup routing
+Delivery tracking
+
+Real-world deployment would require additional:
+
+Regulatory approvals/compliance
+Transport-partner agreements
+Insurance arrangements
+Security procedures
+Legal review
+Operational testing
+🔮 Future Improvements
+Real-time traveller matching
+Live travel/transport data
+Advanced route optimization
+Fraud detection
+Automated risk scoring
+More transport partners
+More verification hubs
+Dynamic pricing
+Real-time delivery prediction
+International shipping support
+Machine-learning based demand prediction
+⚠️ Disclaimer
+
+CrowdShip is a technology/product concept and prototype.
+
+Transporting parcels through flights, trains, buses, road networks, or other modes is subject to the applicable laws, security requirements, carrier policies, and contractual restrictions.
+
+The platform does not intend to bypass transport or security regulations.
+
+🤝 Vision
+
+People are already going there.
+Your parcel needs to go there too.
+Why not connect them?
+
+CrowdShip — Move smarter. Travel together.
