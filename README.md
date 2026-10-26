@@ -18,9 +18,7 @@ Difficult to optimize across different available transport options
 At the same time, millions of people travel between cities every day with unused carrying capacity.
 
 CrowdShip connects these two sides.
-
 💡 Our Solution
-
 A sender creates a shipment with:
 
 Pickup location
